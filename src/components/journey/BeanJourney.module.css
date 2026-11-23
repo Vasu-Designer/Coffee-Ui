@@ -1,0 +1,31 @@
+/* One shared layer for the travelling bean: above the page, below the header and drawers. */
+.layer {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0;
+  contain: layout style;
+}
+.layer[data-mode='static'] {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 0;
+  overflow: visible;
+}
+
+.bean {
+  position: absolute;
+  left: 0;
+  top: 0;
+  will-change: transform;
+}
+.bean img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 14px 14px rgba(12, 6, 3, 0.45)) drop-shadow(0 3px 4px rgba(12, 6, 3, 0.35));
+  user-select: none;
+}

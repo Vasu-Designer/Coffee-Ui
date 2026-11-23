@@ -1,0 +1,166 @@
+/* ---------- Top: gallery + buy box ---------- */
+.top {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(32px, 5vw, 88px);
+  padding-top: calc(var(--header-h) + clamp(20px, 3vw, 40px));
+  padding-bottom: clamp(64px, 8vw, 120px);
+  align-items: start;
+}
+
+.gallery { position: sticky; top: calc(var(--header-h) + 16px); display: grid; gap: 14px; }
+.stage {
+  position: relative;
+  aspect-ratio: 4 / 4.6;
+  border-radius: var(--radius-l);
+  overflow: hidden;
+  background: var(--bg-sunk);
+}
+.slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.6s var(--ease-out); }
+.slide[data-active] { opacity: 1; }
+.slide img { object-fit: cover; }
+.counter {
+  position: absolute;
+  right: 18px;
+  bottom: 16px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(26, 15, 10, 0.55);
+  backdrop-filter: blur(6px);
+  color: var(--cream-100);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+.thumbs { display: flex; gap: 10px; }
+.thumb {
+  position: relative;
+  width: 84px;
+  aspect-ratio: 1;
+  border-radius: 14px;
+  overflow: hidden;
+  opacity: 0.55;
+  transition: opacity 0.3s, box-shadow 0.3s;
+}
+.thumb img { object-fit: cover; }
+.thumb[aria-selected='true'] { opacity: 1; box-shadow: 0 0 0 2px var(--bg), 0 0 0 3px var(--ink); }
+.thumb:hover { opacity: 1; }
+
+.info { display: grid; gap: 24px; padding-top: 8px; }
+.crumbs { display: flex; gap: 8px; font-size: 0.82rem; color: var(--ink-3); }
+.crumbs a:hover { color: var(--ink); }
+.titleBlock { display: grid; gap: 10px; justify-items: start; }
+.title { font-size: clamp(2.6rem, 5vw, 4.6rem); }
+.subtitle { font-family: var(--font-serif); font-style: italic; font-size: 1.25rem; color: var(--ink-2); }
+.rating { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; font-weight: 500; }
+.stars { display: inline-flex; gap: 2px; color: var(--accent); }
+.description { font-size: 1.05rem; color: var(--ink-2); max-width: 52ch; }
+
+.notes { display: flex; flex-wrap: wrap; gap: 8px; }
+.notes li {
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--bg-raised);
+  box-shadow: inset 0 0 0 1px var(--line);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.05rem;
+}
+
+.buy { display: grid; gap: 22px; padding: 26px 0; border-block: 1px solid var(--line); }
+.price { font-family: var(--font-serif); font-size: 2.2rem; line-height: 1; letter-spacing: -0.02em; }
+.price span { font-family: var(--font-sans); font-size: 0.85rem; letter-spacing: 0; }
+.option { display: grid; gap: 10px; border: 0; padding: 0; margin: 0; min-width: 0; }
+.option legend, .optionLabel {
+  padding: 0;
+  margin-bottom: 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.option legend { float: left; width: 100%; }
+.optionLabel { margin-bottom: 0; }
+.swatches { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; clear: both; }
+.swatch {
+  display: grid;
+  gap: 2px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+  cursor: pointer;
+  transition: box-shadow 0.25s, background-color 0.25s;
+}
+.swatch span { font-weight: 600; }
+.swatch small { color: var(--ink-3); }
+.swatch:hover { background: var(--bg-raised); }
+.swatch[data-checked] { box-shadow: inset 0 0 0 2px var(--ink); background: var(--bg-raised); }
+.swatch:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.addRow { display: flex; gap: 12px; }
+.addBtn { flex: 1; }
+.addBtn[data-added] { --btn-bg: var(--accent); --btn-ink: var(--cream-50); }
+
+.assure { display: grid; gap: 12px; font-size: 0.9rem; color: var(--ink-2); }
+.assure li { display: flex; align-items: center; gap: 12px; }
+.assure svg { color: var(--accent); flex-shrink: 0; }
+
+/* ---------- Origin band ---------- */
+.origin { padding-block: clamp(72px, 9vw, 130px); }
+.originGrid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 6vw, 96px); }
+.originGrid :global(.eyebrow) { margin-bottom: 18px; color: var(--brass-300); }
+.story { display: grid; gap: 40px; }
+.storyText {
+  font-family: var(--font-serif);
+  font-size: clamp(1.3rem, 2vw, 1.75rem);
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+}
+.storyText::first-letter {
+  float: left;
+  font-size: 4.2em;
+  line-height: 0.8;
+  margin: 0.06em 0.1em 0 0;
+  font-style: italic;
+  color: var(--caramel-400);
+}
+.specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); border-top: 1px solid var(--band-line); }
+.specs > div { padding: 18px 0; border-bottom: 1px solid var(--band-line); padding-right: 16px; }
+.specs dt { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--band-ink-2); margin-bottom: 6px; }
+.specs dd { font-family: var(--font-serif); font-size: 1.2rem; }
+.roastDd { display: flex; align-items: center; gap: 12px; }
+.roastMeter { display: inline-flex; gap: 4px; }
+.roastMeter i { width: 18px; height: 6px; border-radius: 3px; background: var(--band-line); }
+.roastMeter i[data-on] { background: var(--caramel-400); }
+
+/* ---------- Brew tips ---------- */
+.brew { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: clamp(24px, 5vw, 80px); align-items: start; }
+.tips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.tips li {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  padding: 24px;
+  border-radius: var(--radius-m);
+  background: var(--bg-raised);
+  box-shadow: var(--shadow-soft);
+  font-size: 0.98rem;
+}
+.tips span { font-family: var(--font-serif); font-style: italic; font-size: 1.6rem; color: var(--accent); line-height: 1; }
+
+/* ---------- Related ---------- */
+.relatedHead { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: clamp(32px, 4vw, 56px); }
+.related { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(16px, 2vw, 28px); }
+
+@media (max-width: 960px) {
+  .top { grid-template-columns: 1fr; }
+  .gallery { position: static; }
+  .originGrid, .brew { grid-template-columns: 1fr; }
+  .related { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .tips { grid-template-columns: 1fr; }
+  .addRow { flex-direction: column; }
+  .addRow > div:first-child { align-self: flex-start; }
+  .related { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 12px; }
+}

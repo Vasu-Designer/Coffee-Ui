@@ -1,0 +1,44 @@
+/*
+ * Seats for the travelling coffee bean, one per homepage stop. Each anchor
+ * is an invisible box: its centre is where the bean rests. Every seat shares
+ * one size per breakpoint, so the bean never visibly grows or shrinks.
+ * Every host element is position: relative.
+ */
+.anchor {
+  --seat: 72px;
+  position: absolute;
+  display: block;
+  width: var(--seat);
+  height: var(--seat);
+  pointer-events: none;
+  visibility: hidden;
+}
+
+/* ---------- Desktop / tablet (≥ 900px) ---------- */
+.anchor[data-journey-anchor='hero'] { left: 6%; top: 40%; }
+.anchor[data-journey-anchor='cats'] { left: 40%; top: clamp(56px, 7vw, 104px); }
+.anchor[data-journey-anchor='manifesto'] { left: calc(50% - 36px); bottom: 24px; }
+.anchor[data-journey-anchor='rail'] { right: 26%; top: -8px; }
+.anchor[data-journey-anchor='origins'] { left: calc(100% + 12px); top: 38%; }
+.anchor[data-journey-anchor='ritual'] { right: 0; top: 2%; }
+.anchor[data-journey-anchor='testimonials'] { right: 12%; top: clamp(64px, 8vw, 120px); }
+.anchor[data-journey-anchor='kaapi'] { left: -14%; top: 24%; }
+.anchor[data-journey-anchor='journal'] { right: 200px; top: 8px; }
+.anchor[data-journey-anchor='community'] { right: 8%; top: 12%; }
+.anchor[data-journey-anchor='footer'] { right: 6%; bottom: 58%; }
+
+/* ---------- Mobile (< 900px): smaller, along the right edge, clear of copy ---------- */
+@media (max-width: 899px) {
+  .anchor { --seat: 48px; }
+  .anchor[data-journey-anchor='hero'] { left: 2%; top: 30%; }
+  .anchor[data-journey-anchor='cats'] { left: auto; right: 4%; top: 12px; }
+  .anchor[data-journey-anchor='manifesto'] { left: calc(50% - 24px); bottom: 8px; }
+  .anchor[data-journey-anchor='rail'] { right: 0; top: -4px; }
+  .anchor[data-journey-anchor='origins'] { left: auto; right: 2%; top: -6%; }
+  .anchor[data-journey-anchor='ritual'] { right: 2%; top: 0; }
+  .anchor[data-journey-anchor='testimonials'] { right: 2%; top: 8px; }
+  .anchor[data-journey-anchor='kaapi'] { left: auto; right: 0; bottom: -2%; }
+  .anchor[data-journey-anchor='journal'] { right: 0; top: -72px; }
+  .anchor[data-journey-anchor='community'] { right: 2%; top: -24px; }
+  .anchor[data-journey-anchor='footer'] { right: 4%; bottom: 40%; }
+}

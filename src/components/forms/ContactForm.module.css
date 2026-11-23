@@ -1,0 +1,37 @@
+.form { display: grid; gap: 26px; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.topics { border: 0; padding: 0; margin: 0; min-width: 0; }
+.topics legend {
+  padding: 0;
+  margin-bottom: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.topics > div { display: flex; flex-wrap: wrap; gap: 8px; }
+.topic { position: relative; cursor: pointer; }
+.topic input { position: absolute; opacity: 0; pointer-events: none; }
+.topic span {
+  display: inline-flex;
+  align-items: center;
+  height: 42px;
+  padding: 0 18px;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background-color 0.3s, color 0.3s;
+}
+.topic:hover span { background: color-mix(in srgb, var(--ink) 6%, transparent); }
+.topic input:checked + span { background: var(--ink); color: var(--bg); box-shadow: none; }
+.topic input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+.submitRow { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+
+.sent { display: grid; gap: 16px; justify-items: start; padding: clamp(28px, 4vw, 48px); border-radius: var(--radius-l); background: var(--bg-sunk); }
+.sentIcon { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--accent); color: var(--cream-50); }
+
+@media (max-width: 640px) {
+  .row { grid-template-columns: 1fr; }
+}

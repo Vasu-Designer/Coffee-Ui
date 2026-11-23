@@ -1,0 +1,27 @@
+.layout { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+.side { position: sticky; top: calc(var(--header-h) + 24px); display: grid; gap: 36px; }
+.topics { display: grid; gap: 4px; }
+.topics a {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  font-weight: 500;
+  color: var(--ink-2);
+  transition: color 0.3s, padding 0.4s var(--ease-out);
+}
+.topics a:hover { color: var(--ink); padding-left: 8px; }
+.help { display: grid; gap: 14px; justify-items: start; padding: 22px; border-radius: var(--radius-l); background: var(--bg-sunk); }
+.helpMedia { width: 100%; aspect-ratio: 16 / 10; border-radius: var(--radius-m); }
+.groups { display: grid; gap: clamp(48px, 6vw, 80px); }
+.group { scroll-margin-top: calc(var(--header-h) + 24px); }
+.groupTitle {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  .side { position: static; order: 2; }
+}

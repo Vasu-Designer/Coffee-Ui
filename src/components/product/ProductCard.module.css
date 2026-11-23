@@ -1,0 +1,85 @@
+.card { position: relative; }
+.link { display: block; }
+
+.media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-m);
+  overflow: hidden;
+  background: var(--bg-sunk);
+  isolation: isolate;
+}
+.img {
+  object-fit: cover;
+  transition: transform 1.2s var(--ease-out), opacity 0.8s var(--ease-out);
+}
+.alt { opacity: 0; }
+.link:hover .img { transform: scale(1.05); }
+.link:hover .alt { opacity: 1; }
+
+.badges {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  z-index: 2;
+}
+.glass {
+  background: rgba(251, 247, 240, 0.82);
+  backdrop-filter: blur(6px);
+  border-color: transparent;
+  color: #2f1c14;
+}
+
+.go {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--cream-50);
+  color: var(--espresso-800);
+  transform: scale(0.6) rotate(-45deg);
+  opacity: 0;
+  transition: transform 0.6s var(--ease-out), opacity 0.4s;
+}
+.link:hover .go, .link:focus-visible .go { transform: none; opacity: 1; }
+
+.index {
+  position: absolute;
+  left: 16px;
+  bottom: 12px;
+  z-index: 2;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--cream-50);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.4);
+}
+
+.body { padding: 18px 4px 0; display: grid; gap: 4px; }
+.row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 2px 16px; }
+.body { min-width: 0; }
+.name {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(1.3rem, 1.6vw, 1.55rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+.price { font-weight: 500; white-space: nowrap; font-size: 0.95rem; }
+.price span { font-weight: 400; font-size: 0.8rem; }
+.sub { font-size: 0.85rem; color: var(--ink-2); }
+.notes {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--accent);
+}

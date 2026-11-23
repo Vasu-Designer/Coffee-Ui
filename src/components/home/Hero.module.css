@@ -1,0 +1,317 @@
+.hero {
+  position: relative;
+  padding-top: calc(var(--header-h) + clamp(24px, 4vw, 56px));
+  overflow: hidden;
+  background: var(--band);
+  isolation: isolate;
+}
+
+/* ---------- Background moods (one per coffee, cross-faded) ---------- */
+.mood {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 1.4s var(--ease-out);
+}
+.mood[data-on] { opacity: 1; }
+.mood[data-mood='espresso'] {
+  background:
+    radial-gradient(70% 70% at 74% 46%, rgba(207, 143, 76, 0.3), transparent 60%),
+    radial-gradient(80% 60% at 0% 100%, rgba(201, 164, 92, 0.1), transparent 60%),
+    linear-gradient(160deg, #3a2318 0%, #2a1810 60%, #1d110b 100%);
+}
+.mood[data-mood='iced'] {
+  background:
+    radial-gradient(60% 65% at 72% 44%, rgba(236, 223, 202, 0.2), transparent 62%),
+    radial-gradient(70% 60% at 100% 100%, rgba(184, 116, 47, 0.2), transparent 60%),
+    linear-gradient(165deg, #33231b 0%, #2a1c15 55%, #1c130e 100%);
+}
+.mood[data-mood='coldbrew'] {
+  background:
+    radial-gradient(60% 60% at 72% 48%, rgba(220, 160, 70, 0.28), transparent 60%),
+    radial-gradient(90% 70% at 10% 0%, rgba(201, 164, 92, 0.12), transparent 60%),
+    linear-gradient(170deg, #26160d 0%, #1c1009 60%, #120a06 100%);
+}
+
+.grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+  gap: clamp(24px, 4vw, 64px);
+  align-items: center;
+  min-height: min(860px, calc(100svh - var(--header-h) - 96px));
+}
+
+.copy { position: relative; z-index: 2; }
+.eyebrow { color: var(--brass-300); }
+
+/* ---------- Slide copy, stacked in one grid cell ---------- */
+.texts { display: grid; margin-top: 26px; }
+.text {
+  grid-area: 1 / 1;
+  visibility: hidden;
+  transition: visibility 0s linear 0.7s;
+}
+.text[data-active] { visibility: visible; transition-delay: 0s; }
+
+.kicker { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; margin-bottom: 18px; }
+.kickerLabel {
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(245, 238, 226, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(245, 238, 226, 0.16);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cream-100);
+}
+.kickerMeta { font-family: var(--font-serif); font-style: italic; color: var(--brass-300); font-size: 1.05rem; }
+
+.title {
+  font-size: clamp(3rem, 6.2vw, 6.6rem);
+  line-height: 0.92;
+}
+.title em { color: var(--caramel-400); }
+
+.lede { margin-top: 26px; color: var(--band-ink-2); }
+
+.meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+.meta li {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--band-line);
+  font-size: 0.8rem;
+  color: var(--band-ink-2);
+}
+
+.ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 30px; margin-top: 34px; }
+
+/* Pre-animation states (only once JS has flagged <html class="js">) */
+:global(.js) .title :global(.split-word) { transform: translateY(110%); }
+:global(.js) .hero [data-hero='fade'],
+:global(.js) .hero [data-hero='badge'],
+:global(.js) .hero [data-slide-text='0'] [data-copy],
+:global(.js) .hero [data-depth-bean] { opacity: 0; }
+
+/* ---------- Controls ---------- */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2vw, 28px);
+  margin-top: clamp(36px, 5vw, 64px);
+  padding-top: 22px;
+  border-top: 1px solid var(--band-line);
+  max-width: 640px;
+}
+.arrows { display: flex; gap: 10px; }
+.arrow {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(245, 238, 226, 0.28);
+  color: var(--cream-100);
+  transition: background-color 0.4s, color 0.4s, transform 0.5s var(--ease-out);
+}
+.arrow:hover { background: var(--cream-100); color: var(--espresso-800); }
+.arrow:active { transform: scale(0.94); }
+
+.dots { flex: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.dot { width: 100%; display: grid; gap: 6px; text-align: left; color: var(--band-ink-2); transition: color 0.4s; }
+.dot:hover, .dot[aria-current] { color: var(--cream-100); }
+.dotNum { font-family: var(--font-serif); font-style: italic; font-size: 0.95rem; color: var(--caramel-400); }
+.dotLabel { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dotTrack { position: relative; display: block; height: 2px; border-radius: 2px; background: rgba(245, 238, 226, 0.16); overflow: hidden; }
+.dotTrack span { position: absolute; inset: 0; background: var(--caramel-400); transform: scaleX(0); transform-origin: left; }
+.dot[aria-current] .dotTrack { background: rgba(245, 238, 226, 0.24); }
+
+.pause {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: var(--band-ink-2);
+  box-shadow: inset 0 0 0 1px var(--band-line);
+  transition: color 0.3s;
+}
+.pause:hover { color: var(--cream-100); }
+
+/* ---------- Visual stage (the shared cup sits on the anchor) ---------- */
+.visual {
+  position: relative;
+  justify-self: center;
+  width: 100%;
+  max-width: 620px;
+  height: min(600px, 66svh);
+}
+.numeral {
+  position: absolute;
+  right: -2%;
+  top: -4%;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(9rem, 19vw, 19rem);
+  line-height: 0.8;
+  letter-spacing: -0.06em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(245, 238, 226, 0.16);
+  user-select: none;
+}
+.halo {
+  position: absolute;
+  left: 50%;
+  top: 54%;
+  width: 92%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(220, 160, 90, 0.26), rgba(220, 160, 90, 0.06) 60%, transparent);
+  transition: background 1.2s var(--ease-out);
+}
+.hero[data-active='iced'] .halo { background: radial-gradient(closest-side, rgba(240, 228, 208, 0.24), rgba(240, 228, 208, 0.05) 60%, transparent); }
+.hero[data-active='coldbrew'] .halo { background: radial-gradient(closest-side, rgba(230, 170, 70, 0.3), rgba(230, 170, 70, 0.06) 60%, transparent); }
+.plate {
+  position: absolute;
+  left: 50%;
+  bottom: -2%;
+  width: 78%;
+  height: 12%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(245, 238, 226, 0.1), transparent);
+  box-shadow: inset 0 0 0 1px rgba(245, 238, 226, 0.08);
+}
+/* ---------- The three coffees, stacked; one visible at a time ---------- */
+.cups { position: absolute; inset: 4% 4% 2%; z-index: 1; }
+.cupItem {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  will-change: transform, opacity;
+}
+.cupItem:not(:first-child) { opacity: 0; }
+:global(.js) .cupItem { opacity: 0; }
+.cupImg {
+  display: block;
+  width: auto;
+  height: calc(var(--cup-h, 0.8) * 100%);
+  max-width: 100%;
+  object-fit: contain;
+  object-position: 50% 100%;
+  filter: drop-shadow(0 34px 34px rgba(12, 6, 3, 0.5)) drop-shadow(0 6px 10px rgba(12, 6, 3, 0.35));
+  user-select: none;
+}
+
+/* Real steam lifted from a photograph, above the hot cup only. */
+.steam {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--cup-h, 0.6) * 78%);
+  width: 26%;
+  height: 46%;
+  margin-left: -15%;
+  pointer-events: none;
+}
+.steam img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: 50% 100%;
+  opacity: 0;
+  -webkit-mask-image: linear-gradient(to top, transparent 0%, #000 28%, #000 62%, transparent 100%);
+  mask-image: linear-gradient(to top, transparent 0%, #000 28%, #000 62%, transparent 100%);
+  transform-origin: 50% 100%;
+}
+.steamA { animation: rise 5.2s ease-in-out infinite; }
+.steamB { left: 22% !important; animation: rise 5.2s ease-in-out -2.6s infinite; }
+@keyframes rise {
+  0% { opacity: 0; transform: translateY(18%) scaleY(0.85) skewX(0deg); }
+  30% { opacity: 0.55; }
+  60% { opacity: 0.4; transform: translateY(-4%) scaleY(1.02) skewX(-6deg); }
+  100% { opacity: 0; transform: translateY(-22%) scaleY(1.12) skewX(5deg); }
+}
+
+.badge {
+  position: absolute;
+  top: 2%;
+  left: 2%;
+  width: clamp(100px, 9vw, 132px);
+  aspect-ratio: 1;
+  color: var(--cream-100);
+  z-index: 1;
+}
+.badge > svg { width: 100%; height: 100%; overflow: visible; }
+.badge text {
+  font-family: var(--font-sans);
+  font-size: 9.6px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  fill: currentColor;
+}
+.badgeCore {
+  position: absolute;
+  inset: 30%;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--brass-300);
+  color: var(--espresso-800);
+}
+
+/* Depth beans */
+.depthWrap { position: absolute; z-index: 0; pointer-events: none; }
+.depthWrap img { display: block; object-fit: contain; opacity: 0.75; }
+
+/* ---------- Marquee ---------- */
+.marquee {
+  position: relative;
+  margin-top: clamp(36px, 5vw, 64px);
+  padding-block: 22px;
+  border-top: 1px solid var(--band-line);
+  --marquee-speed: 46s;
+}
+.region {
+  display: inline-flex;
+  align-items: center;
+  gap: 48px;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
+  font-weight: 300;
+  color: var(--band-ink-2);
+  white-space: nowrap;
+}
+.region svg { color: var(--caramel-400); }
+
+@media (max-width: 899px) {
+  .grid { grid-template-columns: 1fr; min-height: 0; }
+  .visual { order: -1; height: min(380px, 44svh); max-width: 420px; margin-top: 4px; }
+  .numeral { font-size: 9rem; right: 0; }
+  .badge { left: auto; right: 0; top: auto; bottom: 6%; width: 92px; }
+  .texts { margin-top: 18px; }
+  .controls { gap: 12px; }
+  .dotLabel { display: none; }
+  .arrow { width: 46px; height: 46px; }
+}
+@media (max-width: 520px) {
+  .title { font-size: clamp(2.6rem, 12vw, 3.4rem); }
+  .meta li { font-size: 0.74rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  :global(.js) .title :global(.split-word) { transform: none; }
+  :global(.js) .hero [data-hero='fade'],
+  :global(.js) .hero [data-hero='badge'],
+  :global(.js) .hero [data-slide-text='0'] [data-copy],
+  :global(.js) .hero [data-depth-bean] { opacity: 1; }
+  .text { transition: none; }
+}

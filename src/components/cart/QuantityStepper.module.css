@@ -1,0 +1,20 @@
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  height: 54px;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+}
+.stepper[data-size='sm'] { height: 36px; }
+.stepper button {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 100%;
+  border-radius: 999px;
+  transition: background-color 0.25s;
+}
+.stepper[data-size='sm'] button { width: 34px; }
+.stepper button:hover:not(:disabled) { background: color-mix(in srgb, var(--ink) 8%, transparent); }
+.stepper button:disabled { opacity: 0.35; cursor: not-allowed; }
+.stepper output { min-width: 26px; text-align: center; font-weight: 500; }
